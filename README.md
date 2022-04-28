@@ -32,6 +32,8 @@ the authorities can use.
 
 
 Source Code:
+
+
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -47,10 +49,9 @@ public:
 	string setName();//returns(holds the string) of the user's whole name
 	int getChoice();
 	int option;//user will choose an option from the menu
-	string firstName;
+	string firstName;//made public to be used in a derived class later
 
 private:
-	//string firstName;
 	string lastName;
 	
 };
@@ -58,7 +59,7 @@ private:
 class crimeType {
 public:
 	void getCrime();
-	string setCrime();//may delete
+	string setCrime();//hold the string of the crime title
 	void printCrime();
 private:
 	string crime;
@@ -66,8 +67,6 @@ private:
 
 class timeType {
 public:
-	void printDate();
-	void printTime();
 	string setDate();//contains the string of the date(includes month, day, year)
 	string setTime();//contains a string of the time(incldues hour and minute)
 	void getDate();
@@ -84,7 +83,7 @@ private:
 class locationType{
 public:
 	void getAddress();
-	string setAddress();//returns a string of the location(including the street name and the address)
+	string setAddress();//holds a string of the location(including the street name and the address)
 	timeType time2;//composition
 private:
 	string streetName;
@@ -97,6 +96,12 @@ public:
 private:
 	int rating;
 };
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 
 
 
@@ -128,7 +133,7 @@ void menu2() {
 		string dayReported;
 		string yearReported;
 	};
-	crimeCaseType crimeCases[5];
+	crimeCaseType crimeCases[5];//declares an array of structs. each element is a struct for the info on previously reported crimes
 	for (int i = 0; i < 5;i++) {//loop that will display to the user the list of previously reported crimes.
 		string crime;
 		inData >> crimeCases[i].caseNo >> crimeCases[i].monthReported >> crimeCases[i].dayReported >> crimeCases[i].yearReported; //crimeCases[i].typeOfCrime;
@@ -137,11 +142,18 @@ void menu2() {
 		crimeCases[i].typeOfCrime = crime; //stores the crime into the appropriate struct variable
 		cout << "Case #: " << crimeCases[i].caseNo << "		"
 			<< "Date Reported: " << crimeCases[i].monthReported << " " << crimeCases[i].dayReported << ", " << crimeCases[i].yearReported << "		"
-			<< "Crime Witnessed: " << crimeCases[i].typeOfCrime << endl;
+			<< "Crime Witnessed:    " << crimeCases[i].typeOfCrime << endl;
 	}
 	inData.close();
 	outData.close();
 }
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 
 
 
@@ -153,7 +165,7 @@ int main() {
 
 	firstPerson.getFirst();
 	firstPerson.getLast();
-	firstPerson.getChoice();
+	firstPerson.getChoice();//user chooses a menu option
 
 
 	if (firstPerson.option == 1) {
@@ -165,8 +177,8 @@ int main() {
 			menu2();
 			cout << "Case #: 6"<<"		"
 				<< "Date Reported: " << firstTime.setDate()<<"		"
-				<< "Crime Witnessed: " << firstCrime.setCrime() << endl;
-			soLong.firstName = firstPerson.firstName;//adds the newly reporte crime to the old list, since the lsit was printed in menu2 function
+				<< "Crime Witnessed:    " << firstCrime.setCrime() << endl;//adds the newly reported crime to the old list, since the lsit was printed in menu2 function
+			soLong.firstName = firstPerson.firstName;
 			soLong.printRating();
 		}
 		else if (repeat == 2) {
@@ -261,12 +273,7 @@ string timeType::setTime() {
 string timeType::setDate() {
 	return month + " " + date  + ", " + year;
 }
-void timeType::printDate() {
-	cout << month << " " << date << ", " << year;
-}
-void timeType::printTime() {
-	cout << hour << ":" << minute;
-}
+
 
 
 
